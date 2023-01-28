@@ -73,6 +73,8 @@ def word_each(words):
                             value += c.text
                          
                         for d in li.descendants:
+                            if c.name in ['dl','ul']:
+                                continue
                             if isinstance(d, NavigableString):
                                 continue
                             if d.has_attr('class') and 'Latn' in d['class'] and d.has_attr('lang') and d['lang'] == 'es':
@@ -99,15 +101,15 @@ roots = {}
 
 for d in definitions:
     if len(definitions[d]) == 1:
-        d_def = list_single(definitions[d])
-        if (len(links[d]) > 1):
-            assert len(links[d]) == 2
-            print(d, d_def, links[d])
-            assert " combined with " in d_def
-        
-        if d not in roots:
+        if (len(links[d]) > 0):
+            d_def = list_single(definitions[d])
+            if (len(links[d]) > 1):
+                assert len(links[d]) == 2
+                print(d, d_def, links[d])
+                assert " combined with " in d_def
+            assert f" of {links[0]}" in d_def
             roots[d] = links[d]
 
-print(roots)
+# print(roots)
 print(previous_h4s)
 
