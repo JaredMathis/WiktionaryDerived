@@ -4,6 +4,12 @@ import base64
 import os
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
+import json
+
+def file_json_read(my_path):
+    with open(my_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+        return data
 
 
 def dir_create_if_not_exists(my_path):
