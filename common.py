@@ -18,11 +18,16 @@ def dir_create_if_not_exists(my_path):
     else:
         os.makedirs(my_path)
 
-def http_get_cached(url, file_extension='.htm', decode_response=True, cached_path = 'cached_websites'):
+def b64(s):
+    b = base64.b64encode(bytes(s, 'utf-8')) # bytes
+    base64_str = b.decode('utf-8') # convert bytes to string\
+    return base64_str
+
+def http_get_cached(url, file_extension='.htm', cached_path = 'cached_websites'):
     factor = 1000
     sleep_time = random.randrange(5 * factor, 10  * factor) / factor
 
-    encoded = base64.b64encode(url.encode()).decode()
+    encoded = b64(url)
     encoded_path = os.path.join(cached_path, encoded + file_extension)
 
     dir_create_if_not_exists(cached_path)
@@ -31,16 +36,14 @@ def http_get_cached(url, file_extension='.htm', decode_response=True, cached_pat
         print(f'downloading {url} to {encoded_path}')
         print(f'Sleeping for {sleep_time}s')
         sleep(sleep_time)
-        http_get_save(url, encoded_path, decode_response)
+        http_get_save(url, encoded_path)
 
-    with open(encoded_path, 'r') as opened:
+    with open(encoded_path, 'r', encoding='utf-8') as opened:
         body = opened.read()
         return body
 
-def http_get_save(url, path_save, decode_response=True):
+def http_get_save(url, path_save):
     with urlopen(url) as response:
         body = response.read()
-        if decode_response:
-            body = body.decode()
         with open(path_save, 'wb') as f:
             f.write(body)
