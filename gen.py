@@ -20,10 +20,15 @@ def list_single(list):
     assert len(list) == 1
     return list[0]
 
+definitions = {}
+
 previous_h4s = {}
 
 def word_each(words):
+    skips = ['Letter', 'Derived terms', 'Antonyms']
     for word in words[:10]:
+        definitions[word] = []
+
         try:
             html = http_get_cached('https://en.wiktionary.org/wiki/' + quote(word))
         except:
@@ -44,8 +49,9 @@ def word_each(words):
         while current != spanish_next:
             if current.name == 'h4':
                 previous_h4 = current.text
-            if current.text.startswith('Letter'):
-                skip_next_ol = True
+            for s in skips:
+                if current.text.startswith(s):
+                    skip_next_ol = True
             if current.name == 'ol':
                 if skip_next_ol:
                     skip_next_ol = False
@@ -54,10 +60,20 @@ def word_each(words):
                     for li in current.contents:
                         if isinstance(li, NavigableString):
                             continue
-                        print(li.contents[0].get_text())
+                        value = ''
+                        for c in li.contents:
+                            if c.name in ['dl','ul']:
+                                continue
+                            value += c.text
+                        if value.startswith('('):
+                            continue
+                        if value in definitions[word]:
+                            continue
+                        definitions[word].append(value)
 
             current = current.next_sibling
-
+            if current == None:
+                break
 
 word_each(words)
 print(previous_h4s)
