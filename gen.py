@@ -78,6 +78,8 @@ def word_each(words):
                             if d.has_attr('class') and 'Latn' in d['class'] and d.has_attr('lang') and d['lang'] == 'es':
                                 cs = d.contents
                                 if len(cs) == 1 and list_single(cs).name == 'a':
+                                    if (d.text in links[word]):
+                                        continue
                                     links[word].append(d.text)
                         # if value.startswith('('):
                         #     continue
