@@ -111,6 +111,11 @@ for d in definitions:
             assert (" of " + str(links[d][0])) in d_def
             roots[d] = links[d]
 
+roots_list = []
+for v in roots.values():
+    for r in v:
+        roots_list.append(r)
+
 # print(roots)
 print(previous_h4s)
 
