@@ -25,8 +25,13 @@ definitions = {}
 previous_h4s = {}
 
 def word_each(words):
-    skips = ['Letter', 'Derived terms', 'Antonyms']
-    for word in words[:10]:
+    skips = ['Letter', 'Derived terms', 'Antonyms', 'Usage notes', 'Alternative forms']
+    for word in words:
+        if word == 'jesucristo':
+            word = 'Jesucristo'
+        if word == 'santiago':
+            word = 'Santiago'
+
         definitions[word] = []
 
         try:
@@ -44,18 +49,16 @@ def word_each(words):
         assert next_index > 0
         spanish_next = h2s[next_index]
 
-        skip_next_ol = False
         current = spanish
         while current != spanish_next:
             if current.name == 'h4':
                 previous_h4 = current.text
-            for s in skips:
-                if current.text.startswith(s):
-                    skip_next_ol = True
             if current.name == 'ol':
-                if skip_next_ol:
-                    skip_next_ol = False
-                else:
+                skip_next_ol = False
+                for s in skips:
+                    if current.text.startswith(s):
+                        skip_next_ol = True
+                if not skip_next_ol:
                     previous_h4s[previous_h4] = True
                     for li in current.contents:
                         if isinstance(li, NavigableString):
