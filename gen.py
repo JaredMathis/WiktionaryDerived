@@ -24,6 +24,8 @@ definitions = {}
 
 previous_h4s = {}
 
+links = {}
+
 def word_each(words):
     skips = ['Letter', 'Derived terms', 'Antonyms', 'Usage notes', 'Alternative forms', 'Descendants', 'Further reading', 'See also', 'Descendants', 'Related terms']
     for word in words:
@@ -33,6 +35,7 @@ def word_each(words):
             word = 'Santiago'
 
         definitions[word] = []
+        links[word] = []
 
         try:
             html = http_get_cached('https://en.wiktionary.org/wiki/' + quote(word))
@@ -68,6 +71,14 @@ def word_each(words):
                             if c.name in ['dl','ul']:
                                 continue
                             value += c.text
+                         
+                        for d in li.descendants:
+                            if isinstance(d, NavigableString):
+                                continue
+                            if d.has_attr('class') and 'Latn' in d['class'] and d.has_attr('lang') and d['lang'] == 'es':
+                                cs = d.contents
+                                if len(cs) == 1 and list_single(cs).name == 'a':
+                                    links[word].append(d.text)
                         # if value.startswith('('):
                         #     continue
                         value = value.strip().replace('\n', ' ').replace('\xa0', ' ')
@@ -82,6 +93,10 @@ def word_each(words):
 
 word_each(words)
 
-print(definitions)
+for d in definitions:
+    if len(definitions[d]) == 1:
+        print(d, definitions[d], links[d]) 
+
+# print(definitions)
 print(previous_h4s)
 
