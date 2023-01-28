@@ -102,6 +102,7 @@ for d in definitions:
         d_def = list_single(definitions[d])
         if (len(links[d]) > 1):
             assert len(links[d]) == 2
+            print(d, d_def, links[d])
             assert " combined with " in d_def
         
         if d not in roots:
