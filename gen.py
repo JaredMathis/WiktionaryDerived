@@ -25,7 +25,7 @@ definitions = {}
 previous_h4s = {}
 
 def word_each(words):
-    skips = ['Letter', 'Derived terms', 'Antonyms', 'Usage notes', 'Alternative forms']
+    skips = ['Letter', 'Derived terms', 'Antonyms', 'Usage notes', 'Alternative forms', 'Descendants', 'Further reading', 'See also', 'Descendants', 'Related terms']
     for word in words:
         if word == 'jesucristo':
             word = 'Jesucristo'
@@ -56,7 +56,7 @@ def word_each(words):
             if current.name == 'ol':
                 skip_next_ol = False
                 for s in skips:
-                    if current.text.startswith(s):
+                    if previous_h4.text.startswith(s):
                         skip_next_ol = True
                 if not skip_next_ol:
                     previous_h4s[previous_h4] = True
