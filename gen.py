@@ -97,7 +97,8 @@ word_each(words)
 
 for d in definitions:
     if len(definitions[d]) == 1:
-        print(d, definitions[d], links[d]) 
+        if (len(links[d]) > 1):
+            print(d, definitions[d], links[d]) 
 
 # print(definitions)
 print(previous_h4s)
