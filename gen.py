@@ -67,8 +67,6 @@ def word_each(words):
                         for c in li.contents:
                             if c.name in ['dl','ul']:
                                 continue
-                            if not isinstance(c, NavigableString) and c.has_attr('class') and 'use-with-mention' in c['class']:
-                                print(word)
                             value += c.text
                         # if value.startswith('('):
                         #     continue
