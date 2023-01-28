@@ -1,6 +1,6 @@
 from common import file_json_read, http_get_cached
 from urllib.parse import quote    
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 
 words = file_json_read('../BibleVersions/gitignore/spanish_words.json')
 
@@ -23,7 +23,7 @@ def list_single(list):
 previous_h4s = {}
 
 def word_each(words):
-    for word in words[:1]:
+    for word in words[:10]:
         try:
             html = http_get_cached('https://en.wiktionary.org/wiki/' + quote(word))
         except:
@@ -51,7 +51,10 @@ def word_each(words):
                     skip_next_ol = False
                 else:
                     previous_h4s[previous_h4] = True
-                    print(current)
+                    for li in current.contents:
+                        if isinstance(li, NavigableString):
+                            continue
+                        print(li.contents[0].get_text())
 
             current = current.next_sibling
 
