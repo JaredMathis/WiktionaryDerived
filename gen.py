@@ -95,11 +95,18 @@ def word_each(words):
 
 word_each(words)
 
+roots = {}
+
 for d in definitions:
     if len(definitions[d]) == 1:
+        d_def = list_single(definitions[d])
         if (len(links[d]) > 1):
-            print(d, definitions[d], links[d]) 
+            assert len(links[d]) == 2
+            assert " combined with " in d_def
+        
+        if d not in roots:
+            roots[d] = links[d]
 
-# print(definitions)
+print(roots)
 print(previous_h4s)
 
