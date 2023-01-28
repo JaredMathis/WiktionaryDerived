@@ -1,4 +1,7 @@
-from common import file_json_read
+from common import file_json_read, http_get_cached
 
 words = file_json_read('../BibleVersions/gitignore/spanish_words.json')
-print(words)
+
+for word in words[:10]:
+    print(word)
+    http_get_cached('https://en.wiktionary.org/wiki/' + word)

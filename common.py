@@ -42,5 +42,5 @@ def http_get_save(url, path_save, decode_response=True):
         body = response.read()
         if decode_response:
             body = body.decode()
-        with open(path_save, 'w') as f:
+        with open(path_save, 'wb') as f:
             f.write(body)
