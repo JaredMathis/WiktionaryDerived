@@ -1,3 +1,4 @@
+import json
 from common import file_json_read, http_get_cached
 from urllib.parse import quote    
 from bs4 import BeautifulSoup, NavigableString
@@ -116,7 +117,21 @@ for v in roots.values():
     for r in v:
         roots_list.append(r)
 
+
+def file_json_write(file_path, result):
+    j = json_to(result)
+    with open(file_path, 'w', encoding='utf-8') as output:
+        output.write(j)
+
+def json_to(result):
+    j = json.dumps(result, ensure_ascii=False, indent=4)
+    return j
+
+file_json_write("public/roots/es.json", roots)
+
 word_each(roots_list)
+
+file_json_write("public/definitions/es.json", definitions)
 
 # print(roots)
 print(previous_h4s)
