@@ -107,7 +107,8 @@ for d in definitions:
                 assert len(links[d]) == 2
                 print(d, d_def, links[d])
                 assert " combined with " in d_def
-            assert f" of {links[0]}" in d_def
+            print(d, d_def, links[d])
+            assert (" of " + str(links[d][0])) in d_def
             roots[d] = links[d]
 
 # print(roots)
