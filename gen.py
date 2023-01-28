@@ -116,6 +116,8 @@ for v in roots.values():
     for r in v:
         roots_list.append(r)
 
+word_each(roots_list)
+
 # print(roots)
 print(previous_h4s)
 
