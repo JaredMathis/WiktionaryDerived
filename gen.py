@@ -51,15 +51,15 @@ def word_each(words):
 
         current = spanish
         while current != spanish_next:
-            if current.name == 'h4':
-                previous_h4 = current.text
+            if current.name in ['h4', 'h3']:
+                previous_heading = current.text
             if current.name == 'ol':
                 skip_next_ol = False
                 for s in skips:
-                    if previous_h4.text.startswith(s):
+                    if previous_heading.startswith(s):
                         skip_next_ol = True
                 if not skip_next_ol:
-                    previous_h4s[previous_h4] = True
+                    previous_h4s[previous_heading] = True
                     for li in current.contents:
                         if isinstance(li, NavigableString):
                             continue
@@ -70,6 +70,7 @@ def word_each(words):
                             value += c.text
                         if value.startswith('('):
                             continue
+                        value = value.strip()
                         if value in definitions[word]:
                             continue
                         definitions[word].append(value)
@@ -79,5 +80,7 @@ def word_each(words):
                 break
 
 word_each(words)
+
+print(definitions)
 print(previous_h4s)
 
