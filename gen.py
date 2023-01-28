@@ -3,6 +3,13 @@ from urllib.parse import quote
 
 words = file_json_read('../BibleVersions/gitignore/spanish_words.json')
 
-for word in words[:10]:
-    print(word)
-    http_get_cached('https://en.wiktionary.org/wiki/' + quote(word))
+def words_download(words):
+    for word in words:
+        print(word)
+        try:
+            http_get_cached('https://en.wiktionary.org/wiki/' + quote(word))
+        except:
+            print('error')
+
+words_download(words)
+
