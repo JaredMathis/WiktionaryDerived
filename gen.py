@@ -134,7 +134,7 @@ file_json_write("public/roots/es.json", roots)
 
 word_each(roots_list)
 
-file_json_write("public/definitions/es.json", definitions)
+file_json_write("public/translations/es_en.json", definitions)
 
 # print(roots)
 print(previous_h4s)
