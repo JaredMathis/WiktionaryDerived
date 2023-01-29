@@ -30,13 +30,11 @@ links = {}
 def word_each(words):
     skips = ['Letter', 'Derived terms', 'Antonyms', 'Usage notes', 'Alternative forms', 'Descendants', 'Further reading', 'See also', 'Descendants', 'Related terms']
     for word in words:
-        word = capitalizes(word)
-
         definitions[word] = []
         links[word] = []
 
         try:
-            html = http_get_cached('https://en.wiktionary.org/wiki/' + quote(word))
+            html = http_get_cached('https://en.wiktionary.org/wiki/' + quote(capitalizes(word)))
         except:
             print('error ')
             return
