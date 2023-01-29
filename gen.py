@@ -30,10 +30,7 @@ links = {}
 def word_each(words):
     skips = ['Letter', 'Derived terms', 'Antonyms', 'Usage notes', 'Alternative forms', 'Descendants', 'Further reading', 'See also', 'Descendants', 'Related terms']
     for word in words:
-        if word == 'jesucristo':
-            word = 'Jesucristo'
-        if word == 'santiago':
-            word = 'Santiago'
+        word = capitalizes(word)
 
         definitions[word] = []
         links[word] = []
@@ -95,6 +92,13 @@ def word_each(words):
             current = current.next_sibling
             if current == None:
                 break
+
+def capitalizes(word):
+    if word == 'jesucristo':
+        word = 'Jesucristo'
+    if word == 'santiago':
+        word = 'Santiago'
+    return word
 
 word_each(words)
 
