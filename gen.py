@@ -34,7 +34,8 @@ def word_each(words):
         links[word] = []
 
         try:
-            html = http_get_cached('https://en.wiktionary.org/wiki/' + quote(capitalizes(word)))
+            html = http_get_cached(
+                'https://en.wiktionary.org/wiki/' + quote(capitalizes(word)))
         except:
             print('error ')
             return
